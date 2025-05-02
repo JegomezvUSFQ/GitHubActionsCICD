@@ -16,11 +16,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Desplegar en servidor
+      - name: Desplegar en el servidor
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /home/${{ secrets.SSH_USER }}/GitHubActionsCICD
+          ssh -p 2222 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+           cd /home/${{ secrets.SSH_USER }}/GitHubActionsCICD
             git pull origin main
             npm install
             pm2 restart app || pm2 start app.js --name app
